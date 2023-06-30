@@ -8,7 +8,7 @@ use GPT::ListTypes;
 use GPT::ListFiles;
 #use OOGenerator;
 
-my $GCC_XML = %*ENV<GPT_GCCXML> || 'gccxml';
+my $GCC_XML = %*ENV<GPT_GCCXML> || 'castxml';
 my $CASTXML_STD = 'c89';
 my $CASTXML = False;
 my $SILENT = False;
@@ -219,7 +219,7 @@ sub do-magic($header, @other) {
     $xml-output = $prun.out.slurp;
     die "Error: no XML produced by castxml " ~ $serr if $xml-output eq "";
   } else {
-    gpt-note "Calling GCCXML : $GCC_XML $header -fxml=plop.xml ", |@other;
+    gpt-note "Calling GCCXML : $GCC_XML $header -o=plop.xml ", |@other;
     $xml-output = run($GCC_XML,  $header, "-fxml=-", @other, :out).out.slurp;
   }
   %times<gccxml> = now - $t;
